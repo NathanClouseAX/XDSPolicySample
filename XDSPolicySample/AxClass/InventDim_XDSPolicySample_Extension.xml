@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>InventDim_XDSPolicySample_Extension</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+[ExtensionOf(tableStr(InventDim))]
+final class InventDim_XDSPolicySample_Extension
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>insert</Name>
+				<Source><![CDATA[
+    public void insert(boolean _doInsert)
+    {
+        this.AAXInventSiteRecId = InventSite::find(this.InventSiteId).RecId;
+
+        next insert(_doInsert);
+
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>update</Name>
+				<Source><![CDATA[
+    public void update(boolean _doUpdate)
+    {
+        this.AAXInventSiteRecId = InventSite::find(this.InventSiteId).RecId;
+
+        next update(_doUpdate);
+
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

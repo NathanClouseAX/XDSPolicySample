@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>PurchTable_XDSPolicySample_Extension</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+[ExtensionOf(tableStr(PurchTable))]
+final class PurchTable_XDSPolicySample_Extension
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>insert</Name>
+				<Source><![CDATA[
+    void  insert(boolean _interCompanySilent, AccountingDate _accountingDate)
+    {
+        this.AAXInventSiteRecId = InventSite::find(this.InventSiteId).RecId;
+
+        next insert(_interCompanySilent, _accountingDate);
+
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>update</Name>
+				<Source><![CDATA[
+    public void update(boolean _updateDistributions)
+    {
+        this.AAXInventSiteRecId = InventSite::find(this.InventSiteId).RecId;
+
+        next update(_updateDistributions);
+
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

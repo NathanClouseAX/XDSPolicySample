@@ -13,14 +13,21 @@
 			<Constrained>Yes</Constrained>
 			<Name>SalesTable</Name>
 			<ConstrainedTables />
-			<Value>(SalesTable.InventSiteId == AAXInventSiteUser.InventSiteId)</Value>
+			<Value>(SalesTable.AAXInventSiteRecId == AAXInventSiteUser.InventSiteIdRecId)</Value>
 		</AxSecurityPolicyConstrainedEntity>
 		<AxSecurityPolicyConstrainedEntity xmlns=""
 			i:type="AxSecurityPolicyConstrainedExpression">
 			<Constrained>Yes</Constrained>
 			<Name>PurchTable</Name>
 			<ConstrainedTables />
-			<Value>(PurchTable.InventSiteId == AAXInventSiteUser.InventSiteId)</Value>
+			<Value>(PurchTable.AAXInventSiteRecId == AAXInventSiteUser.InventSiteIdRecId)</Value>
+		</AxSecurityPolicyConstrainedEntity>
+		<AxSecurityPolicyConstrainedEntity xmlns=""
+			i:type="AxSecurityPolicyConstrainedExpression">
+			<Constrained>Yes</Constrained>
+			<Name>InventDim</Name>
+			<ConstrainedTables />
+			<Value>(InventDim.AAXInventSiteRecId == AAXInventSiteUser.InventSiteIdRecId)</Value>
 		</AxSecurityPolicyConstrainedEntity>
 	</ConstrainedTables>
 </AxSecurityPolicy>
