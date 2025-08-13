@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxQuery xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns=""
+	i:type="AxQuerySimple">
+	<Name>AAXCurrentUserInventSite</Name>
+	<SourceCode>
+		<Methods>
+			<Method>
+				<Name>classDeclaration</Name>
+				<Source><![CDATA[
+[Query]
+public class AAXCurrentUserInventSite extends QueryRun
+{
+}
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+	<DataSources>
+		<AxQuerySimpleRootDataSource>
+			<Name>AAXInventSiteUser</Name>
+			<DynamicFields>Yes</DynamicFields>
+			<Table>AAXInventSiteUser</Table>
+			<DataSources>
+				<AxQuerySimpleEmbeddedDataSource>
+					<Name>SysUserInfo</Name>
+					<DynamicFields>Yes</DynamicFields>
+					<Table>SysUserInfo</Table>
+					<DataSources />
+					<DerivedDataSources />
+					<Fields />
+					<Ranges>
+						<AxQuerySimpleDataSourceRange>
+							<Name>IdRange</Name>
+							<Field>Id</Field>
+							<Value>(currentUserId())</Value>
+						</AxQuerySimpleDataSourceRange>
+					</Ranges>
+					<Relations>
+						<AxQuerySimpleDataSourceRelation>
+							<Name>QueryDataSourceRelation1</Name>
+							<Field>UserIdRecId</Field>
+							<JoinDataSource>AAXInventSiteUser</JoinDataSource>
+							<RelatedField>RecId</RelatedField>
+						</AxQuerySimpleDataSourceRelation>
+					</Relations>
+				</AxQuerySimpleEmbeddedDataSource>
+			</DataSources>
+			<DerivedDataSources />
+			<Fields />
+			<Ranges />
+			<GroupBy />
+			<Having />
+			<OrderBy />
+		</AxQuerySimpleRootDataSource>
+	</DataSources>
+</AxQuery>

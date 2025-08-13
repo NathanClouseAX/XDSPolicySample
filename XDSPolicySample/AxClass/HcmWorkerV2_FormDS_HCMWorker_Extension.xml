@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>HcmWorkerV2_FormDS_HCMWorker_Extension</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+[ExtensionOf(formDataSourceStr(HcmWorkerV2, HCMWorker))]
+internal final class HcmWorkerV2_FormDS_HCMWorker_Extension
+{
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>active</Name>
+				<Source><![CDATA[
+    public int active()
+    {
+        DirPersonUser dirPersonUser;
+        HcmWorker HCMWorker = this.cursor();
+
+        int ret = next active();
+
+        dirPersonUser = DirPersonUser::findParty(HcmWorker.Person);
+
+        if(dirPersonUser.RecId)
+        {
+            this.formRun().control(this.formRun().controlId("AAXInventSiteUserTab")).enabled(true);
+        }
+        else
+        {
+            this.formRun().control(this.formRun().controlId("AAXInventSiteUserTab")).enabled(false);
+        }
+
+
+        return ret;
+       
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>selectionChanged</Name>
+				<Source><![CDATA[
+    public void selectionChanged()
+    {
+        DirPersonUser dirPersonUser;
+        HcmWorker HCMWorker = this.cursor();
+
+        next selectionChanged();
+
+        dirPersonUser = DirPersonUser::findParty(HcmWorker.Person);
+
+        if(dirPersonUser.RecId)
+        {
+            this.formRun().control(this.formRun().controlId("AAXInventSiteUserTab")).enabled(true);
+        }
+        else
+        {
+            this.formRun().control(this.formRun().controlId("AAXInventSiteUserTab")).enabled(false);
+        }
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>
