@@ -1,8 +1,6 @@
 ﻿################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
-
-/Projects/XDSPolicySample
 /.vs
 /bin
 /XppMetadata/XDSPolicySample
@@ -11,3 +9,6 @@
 /BuildProjectResult.err.xml
 /BuildModelResult.xml
 /BuildModelResult.log
+/XDSPolicySample.xref
+/Projects/XDSPolicySample/.vs/
+/Projects/XDSPolicySample/XDSPolicySample/obj/
