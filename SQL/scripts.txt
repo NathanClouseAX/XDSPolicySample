@@ -1,0 +1,17 @@
+update SALESTABLE
+set AAXINVENTSITERECID = isnull((select top 1 RecId from InventSite
+							where InventSite.SITEID = SALESTABLE.INVENTSITEID
+							  and INVENTSITE.DATAAREAID = SALESTABLE.DATAAREAID
+							  and INVENTSITE.PARTITION = SALESTABLE.PARTITION),0)
+
+update PurchTable
+set AAXINVENTSITERECID = isnull((select top 1 RecId from InventSite
+							where InventSite.SITEID = PurchTable.INVENTSITEID
+							  and INVENTSITE.DATAAREAID = PurchTable.DATAAREAID
+							  and INVENTSITE.PARTITION = PurchTable.PARTITION),0)
+
+update InventDim
+set AAXINVENTSITERECID = isnull((select top 1 RecId from InventSite
+							where InventSite.SITEID = InventDim.INVENTSITEID
+							  and INVENTSITE.DATAAREAID = InventDim.DATAAREAID
+							  and INVENTSITE.PARTITION = InventDim.PARTITION),0)
