@@ -16,6 +16,8 @@ public class AAXInventSiteUser extends common
     /// </summary>
     public void insert()
     {
+        SecurityUserRole SecurityUserRole;
+        SecurityRole SecurityRole;
         sysUserInfo sysUserInfo;
 
         this.InventSiteIdRecId = InventSite::find(this.InventSiteId).RecId;
@@ -25,6 +27,29 @@ public class AAXInventSiteUser extends common
             where sysUserInfo.id == this.UserId;
 
         this.UserIdRecId = sysUserInfo.RecId;
+
+        select count(RecId) from SecurityUserRole
+            join AotName, RecId from SecurityRole
+            where SecurityUserRole.User == this.UserId
+               && SecurityUserRole.AssignmentStatus == RoleAssignmentStatus::Enabled
+               && SecurityRole.AotName == 'AAXInventSiteUserPolicyRole'
+               && SecurityRole.RecId == SecurityUserRole.SecurityRole;
+
+        if(SecurityUserRole.RecId == 0)
+        {
+            select firstonly RecId from SecurityRole
+                where SecurityRole.AotName == 'AAXInventSiteUserPolicyRole';
+
+            if(SecurityRole.RecId)
+            {
+                SecurityUserRole.initValue();
+                SecurityUserRole.AssignmentMode = RoleAssignmentMode::Automatic;
+                SecurityUserRole.AssignmentStatus = RoleAssignmentStatus::Enabled;
+                SecurityUserRole.SecurityRole = SecurityRole.RecId;
+                SecurityUserRole.User = this.UserId;
+                SecurityUserRole.insert();
+            }
+        }
 
         super();
     }
@@ -55,6 +80,44 @@ public class AAXInventSiteUser extends common
         }
     
         return ret;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>delete</Name>
+				<Source><![CDATA[
+    /// <summary>
+    ///
+    /// </summary>
+    public void delete()
+    {
+        AAXInventSiteUser AAXInventSiteUser;
+
+        SecurityUserRole SecurityUserRole;
+        SecurityRole SecurityRole;
+
+        UserId UserId = this.UserId;
+
+        select count(RecId) from AAXInventSiteUser
+            where AAXInventSiteUser.userId == this.UserId
+               && AAXInventSiteUser.RecId != this.RecId;
+
+        super();
+
+        if(AAXInventSiteUser.RecId == 0)
+        {
+            select firstonly RecId from SecurityRole
+                where SecurityRole.AotName == 'AAXInventSiteUserPolicyRole';
+
+            if(SecurityRole.RecId)
+            {
+                delete_from SecurityUserRole
+                    where SecurityUserRole.SecurityRole == SecurityRole.RecId
+                       && SecurityUserRole.user == UserId;
+            }
+        }
+
     }
 
 ]]></Source>
